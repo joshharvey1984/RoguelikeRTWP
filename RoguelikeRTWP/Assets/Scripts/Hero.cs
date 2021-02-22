@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+public class Hero : MonoBehaviour {
+    private static readonly int WalkDirection = Animator.StringToHash("WalkDirection");
+    private void Awake() {
+        gameObject.GetComponent<Animator>().SetInteger(WalkDirection, 4);
     }
 }

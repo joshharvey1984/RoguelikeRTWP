@@ -1,18 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroController : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class PartyController : MonoBehaviour {
+    public List<Hero> heroes;
+    public Hero selectedHero;
+
+    private void Start() {
+        heroes.AddRange(FindObjectsOfType<Hero>());
+        selectedHero = heroes[0];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private void Update() { }
 }
