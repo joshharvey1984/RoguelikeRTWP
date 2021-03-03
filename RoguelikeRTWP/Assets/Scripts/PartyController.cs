@@ -1,14 +1,34 @@
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PartyController : MonoBehaviour {
-    public List<Hero> heroes;
-    public Hero selectedHero;
+    private static readonly int OutlineColor = Shader.PropertyToID("_OutlineColor");
+    private Party Party { get; set; }
+    private Hero SelectedHero { get; set; }
 
     private void Start() {
-        heroes.AddRange(FindObjectsOfType<Hero>());
-        selectedHero = heroes[0];
+        Party = new Party(FindObjectsOfType<Hero>().ToList());
+        SelectedHero = Party.Heroes[0];
     }
 
-    private void Update() { }
+    private void Update() {
+        if (Input.GetKeyUp(KeyCode.Tab)) {
+            ChangeHero();
+        }
+    }
+
+    private void ChangeHero() {
+        var spriteRenderer = SelectedHero.gameObject.GetComponent<Renderer>();
+        spriteRenderer.material.SetColor(OutlineColor, Color.gray);
+        
+        var currentHeroIndex = Party.Heroes.IndexOf(SelectedHero);
+        currentHeroIndex++;
+        if (currentHeroIndex >= Party.Heroes.Count) {
+            currentHeroIndex = 0;
+        }
+        SelectedHero = Party.Heroes[currentHeroIndex];
+        
+        spriteRenderer = SelectedHero.gameObject.GetComponent<Renderer>();
+        spriteRenderer.material.SetColor(OutlineColor, Color.cyan);
+    }
 }
